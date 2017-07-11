@@ -1,0 +1,53 @@
+@import "bootstrap-sprockets";
+@import "bootstrap";
+@import 'bootstrap-datetimepicker';
+@import "toastr";
+@import 'jquery-ui';
+@import 'dataTables/src/demo_table_jui';
+
+tr.odd {
+    background-color: #ececec;
+}
+tr.odd td.sorting_1 {
+    background-color: #ececec;
+}
+tr.even td.sorting_1 {
+    background-color: #ffffff;
+}
+.bordered-table {
+    border: 1px solid #ddd;
+    border-collapse: separate;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+
+.statut {
+    height: 100px;
+    border: solid 1px;
+}
+
+.data-send {
+  // height: 550px;
+  border: solid 1px;
+}
+
+.photo {
+    height: 50px;
+    width: 50px;
+    margin: 10px;
+}
+
+.photo-home {
+  height: 30px;
+  width: 30px;
+}
+
+.statut-type {
+  float: right;
+  margin: 28px;
+}
+
+.info-pharma {
+  font-size: 20px;
+}

@@ -1,0 +1,11 @@
+I"À(function() {
+  jQuery(function() {
+    return $('#challenges').dataTable({
+      sPaginationType: "full_numbers",
+      bJQueryUI: true,
+      bProcessing: true
+    });
+  });
+
+}).call(this);
+:ET

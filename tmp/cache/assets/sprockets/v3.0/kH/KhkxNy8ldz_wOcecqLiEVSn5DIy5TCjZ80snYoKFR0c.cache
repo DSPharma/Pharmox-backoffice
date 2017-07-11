@@ -1,0 +1,11 @@
+I"È(function() {
+  $(function() {
+    return $('#campaigns').dataTable({
+      bProcessing: true,
+      bServerSide: true,
+      sAjaxSource: $('#campaigns').data('source')
+    });
+  });
+
+}).call(this);
+:ET

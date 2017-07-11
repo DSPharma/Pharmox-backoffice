@@ -1,0 +1,9 @@
+I"Š(function() {
+  $(function() {
+    return $('#campaigns').dataTable({
+      sPaginationType: "full_numbers"
+    });
+  });
+
+}).call(this);
+:ET

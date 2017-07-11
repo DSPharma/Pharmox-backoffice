@@ -1,0 +1,11 @@
+I"Õ(function() {
+  $(function() {
+    return $('#campaigns').dataTable({
+      sPaginationType: "full_numbers",
+      iDisplayStart: 1,
+      sAjaxSource: $('#campaigns').data('source')
+    });
+  });
+
+}).call(this);
+:ET

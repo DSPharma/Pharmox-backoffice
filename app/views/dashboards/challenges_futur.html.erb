@@ -1,0 +1,58 @@
+<script>
+  $(document).on("click", "#dash2 tr", function() {
+    var i = 0
+    var href = $(this).data("href");
+    $(this).find('td').each(function(){
+        i++;
+        if (i == 2) {
+          var product = $(this).text();
+          $.ajax({url: "/challenges/product", type: "POST", data: {"data": product}, success: function(data) {
+            window.location = href;
+          }});
+        }
+    });
+  });
+</script>
+
+<%= link_to 'En cour', dashboards_challenges_current_path, class: "btn btn-default" %>
+<a class="btn btn-primary">À venir</a>
+<%= link_to 'Passé', dashboards_challenges_past_path, class: "btn btn-default" %>
+
+<h1>Challenges à venir</h1>
+
+<table id="dash2" class="table table-condensed table-hover">
+  <thead>
+    <tr>
+      <th>Description</th>
+      <th>Produit</th>
+      <th>date de début - date de fin</th>
+      <th>ciblage</th>
+      <th>nombre de pharmacie</th>
+    </tr>
+  </thead>
+    <% if current_user.try(:admin?) %>
+      <% @challenges.each do |challenge| %>
+        <% if (!@product || (@product != challenge.product)) && challenge.start_at.to_date.future? %>
+            <tr data-href= "<%= challenges_path %>">
+              <td><%= challenge.title %></td>
+              <td><%= challenge.product %><% @product = challenge.product %></td>
+              <td><%= challenge.start_at.strftime("%d/%m/%Y") %> - <%= challenge.end_at.strftime("%d/%m/%Y") %></td>
+              <td><%= challenge.target %></td>
+              <td><%= Challenge.where(product: @product).count %></td>
+            </tr>
+        <% end %>
+      <% end %>
+    <% else %>
+      <% @challenges.each do |challenge| %>
+        <% if (current_user.laboratory_id == challenge.laboratory_id) && (!@product || (@product != challenge.product)) && challenge.start_at.to_date.future? %>
+            <tr data-href= "<%= challenges_path %>">
+              <td><%= challenge.title %></td>
+              <td><%= challenge.product %><% @product = challenge.product %></td>
+              <td><%= challenge.start_at.strftime("%d/%m/%Y") %> - <%= challenge.end_at.strftime("%d/%m/%Y") %></td>
+              <td><%= challenge.target %></td>
+              <td><%= Challenge.where(product: @product).count %></td>
+            </tr>
+        <% end %>
+      <% end %>
+    <% end %>
+</table>

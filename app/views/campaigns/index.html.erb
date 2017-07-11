@@ -1,0 +1,53 @@
+<script>
+  $(document).on("click", "#campaigns tr", function() {
+    console.log($(this).data("href"));
+    if ($(this).data("href") != undefined) {
+      window.location = $(this).data("href");
+    }
+  });
+</script>
+<div class="container">
+  <%= link_to(image_tag("Arrow\ left.svg", :class => "photo"), root_path) %>
+  <span>> <%= @campaign.title %> <%= @campaign.product %> <%= @campaign.start_at.strftime("%d/%m/%Y") %> - <%= @campaign.end_at.strftime("%d/%m/%Y") %> <%= @campaign.target %> <%= Campaign.where(campaign_number: @campaign.campaign_number).count %> </span>
+  <table id="campaigns" class="bordered-table display table-hover table sorting sorting_asc sorting_desc">
+    <thead>
+      <tr>
+        <th>id</th>
+        <th>Statut</th>
+        <th>CIP</th>
+        <th>Nom</th>
+        <th>Adresse</th>
+        <th>CP</th>
+        <th>Ville</th>
+        <th>produit</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% i = 1 %>
+      <% @campaigns.each do |campaign| %>
+          <% if (session[:nbr_campaign] == campaign.campaign_number) %>
+              <tr data-href="<%= campaign_path(campaign) %>">
+                <td><%= campaign.id %></td>
+                <% if campaign.statut_type === 'no data' %>
+                  <td><%= image_tag("No\ Data.svg", :class => "photo") %></td>
+                <% elsif campaign.statut_type === 'validate' %>
+                  <td><%= image_tag("Validate.svg", :class => "photo") %></td>
+                <% elsif campaign.statut_type === 'pending' %>
+                  <td><%= image_tag("Pending.svg", :class => "photo") %></td>
+                <% elsif campaign.statut_type === 'rejected' %>
+                  <td><%= image_tag("Rejected.svg", :class => "photo") %></td>
+                <% end %>
+                <td><%= campaign.pharmacy.cip %></td>
+                <td><%= campaign.pharmacy.name %></td>
+                <td><%= campaign.pharmacy.address %></td>
+                <td><%= campaign.pharmacy.postal_code %></td>
+                <td><%= campaign.pharmacy.city %></td>
+                <td><%= campaign.product %></td>
+                <% i = i + 1 %>
+                <% @save = campaign %>
+              </tr>
+          <% end %>
+      <% end %>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,13 @@
+I"í(function() {
+  jQuery(function() {
+    return {
+      sPaginationType: "bootstrap",
+      bProcessing: true,
+      oLanguage: {
+        sUrl: "//cdn.datatables.net/plug-ins/1.10.15/i18n/French.json"
+      }
+    };
+  });
+
+}).call(this);
+:ET

@@ -1,0 +1,12 @@
+I"î(function() {
+  $(function() {
+    return $('#campaigns').dataTable({
+      sPaginationType: "full_numbers",
+      DisplayLength: 10,
+      iDisplayStart: 0,
+      sAjaxSource: $('#campaigns').data('source')
+    });
+  });
+
+}).call(this);
+:ET

@@ -1,0 +1,19 @@
+I"X(function() {
+  jQuery(function() {
+    return $('#campaigns').dataTable({
+      sPaginationType: "bs-full",
+      bJQueryUI: true,
+      bProcessing: true
+    });
+  });
+
+  jQuery(function() {
+    return $('#dash1').dataTable({
+      sPaginationType: "full_numbers",
+      bJQueryUI: true,
+      bProcessing: true
+    });
+  });
+
+}).call(this);
+:ET

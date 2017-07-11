@@ -1,0 +1,17 @@
+I"b(function() {
+  jQuery(function() {
+    return $('#campaigns').dataTable({
+      sPaginationType: "full_numbers",
+      paging: false,
+      ordering: false,
+      info: false,
+      bPaginate: false,
+      bJQueryUI: true,
+      bProcessing: true,
+      bServerSide: true,
+      sAjaxSource: $('#campaigns').data('source')
+    });
+  });
+
+}).call(this);
+:ET

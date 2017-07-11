@@ -1,0 +1,109 @@
+<h1>Bienvenue dans la partie utilisateur</h1>
+
+<h3>Campagne en cour ... </h3>
+<script>
+  $(document).on("click", "#dash1 tr", function() {
+    var i = 0
+    var href = $(this).data("href");
+    $(this).find('td').each(function(){
+        i++;
+        if (i == 6) {
+          var product = $(this).text();
+          console.log(product);
+          $.ajax({url: "/campaigns/product", type: "POST", data: {"data": product}, success: function(data) {
+            window.location = href;
+          }});
+        }
+    });
+  });
+  $(document).on("click", "#dash2 tr", function() {
+    var i = 0
+    var href = $(this).data("href");
+    $(this).find('td').each(function(){
+        i++;
+        if (i == 6) {
+          var product = $(this).text();
+          $.ajax({url: "/challenges/product", type: "POST", data: {"data": product}, success: function(data) {
+            window.location = href;
+          }});
+        }
+    });
+  });
+</script>
+<table id="dash1" class="table table-condensed table-hover">
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Produit</th>
+      <th>date de début - date de fin</th>
+      <th>ciblage</th>
+      <th>nombre de pharmacie</th>
+      <th>Numéro de campagne</th>
+    </tr>
+  </thead>
+    <% if current_user.try(:admin?) %>
+      <% @campaigns.each do |campaign| %>
+        <% if ((!@product) || (@product != campaign.campaign_number)) && ((campaign.start_at.today? || campaign.start_at.to_date.past?) && campaign.end_at.to_date.future?) %>
+            <tr data-href= "<%= campaigns_path %>">
+              <td><%= campaign.title %></td>
+              <td><%= campaign.product %></td>
+              <td><%= campaign.start_at.strftime("%d/%m/%Y") %> - <%= campaign.end_at.strftime("%d/%m/%Y") %></td>
+              <td><%= campaign.target %></td>
+              <td><%= Campaign.where(campaign_number: campaign.campaign_number).count %></td>
+              <td><%= campaign.campaign_number %><% @product = campaign.campaign_number %></td>
+            </tr>
+        <% end %>
+      <% end %>
+    <% else %>
+      <% @campaigns.each do |campaign| %>
+        <% if (current_user.laboratory_id == campaign.laboratory_id) && (!@product || (@product != campaign.campaign_number)) && ((campaign.start_at.today? || campaign.start_at.to_date.past?) && campaign.end_at.to_date.future?) %>
+            <tr data-href= "<%= campaigns_path %>">
+              <td><%= campaign.title %></td>
+              <td><%= campaign.product %></td>
+              <td><%= campaign.start_at.strftime("%d/%m/%Y") %> - <%= campaign.end_at.strftime("%d/%m/%Y") %></td>
+              <td><%= campaign.target %></td>
+              <td><%= Campaign.where(campaign_number: campaign.campaign_number).count %></td>
+              <td><%= campaign.campaign_number %><% @product = campaign.campaign_number %></td>
+            </tr>
+        <% end %>
+      <% end %>
+    <% end %>
+</table>
+
+<h3>Challenge en cour ... </h3>
+<table id="dash2" class="table table-condensed table-hover">
+  <thead>
+    <tr>
+      <th>Description</th>
+      <th>Produit</th>
+      <th>date de début - date de fin</th>
+      <th>ciblage</th>
+      <th>nombre de pharmacie</th>
+    </tr>
+  </thead>
+    <% if current_user.try(:admin?) %>
+      <% @challenges.each do |challenge| %>
+        <% if (!@product || (@product != challenge.product)) && ((challenge.start_at.today? || challenge.start_at.to_date.past?) && challenge.end_at.to_date.future?) %>
+            <tr data-href= "<%= challenges_path %>">
+              <td><%= challenge.title %></td>
+              <td><%= challenge.product %><% @product = challenge.product %></td>
+              <td><%= challenge.start_at.strftime("%d/%m/%Y") %> - <%= challenge.end_at.strftime("%d/%m/%Y") %></td>
+              <td><%= challenge.target %></td>
+              <td><%= Challenge.where(product: @product).count %></td>
+            </tr>
+        <% end %>
+      <% end %>
+    <% else %>
+      <% @challenges.each do |challenge| %>
+        <% if (current_user.laboratory_id == challenge.laboratory_id) && (!@product || (@product != challenge.product)) && ((challenge.start_at.today? || challenge.start_at.to_date.past?) && challenge.end_at.to_date.future?) %>
+            <tr data-href= "<%= challenges_path %>">
+              <td><%= challenge.title %></td>
+              <td><%= challenge.product %><% @product = challenge.product %></td>
+              <td><%= challenge.start_at.strftime("%d/%m/%Y") %> - <%= challenge.end_at.strftime("%d/%m/%Y") %></td>
+              <td><%= challenge.target %></td>
+              <td><%= Challenge.where(product: @product).count %></td>
+            </tr>
+        <% end %>
+      <% end %>
+    <% end %>
+</table>

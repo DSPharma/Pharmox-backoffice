@@ -1,0 +1,36 @@
+<h1>Voir toutes les campagnes dossier challenges</h1>
+
+<div class="container">
+  <table id="challenges" class="display table table-condensed table-hover">
+    <thead>
+      <tr>
+        <th>id</th>
+        <th>Statut</th>
+        <th>CIP</th>
+        <th>Nom</th>
+        <th>Adresse</th>
+        <th>CP</th>
+        <th>Ville</th>
+        <th>Participants</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% i = 1 %>
+      <% @challenges.each do |challenge| %>
+          <% if (session[:product] == challenge.product) %>
+              <tr>
+                <td><%= i %></td>
+                <td><%= challenge.statut_type %></td>
+                <td><%= challenge.pharmacy.cip %></td>
+                <td><%= challenge.pharmacy.name %></td>
+                <td><%= challenge.pharmacy.address %></td>
+                <td><%= challenge.pharmacy.postal_code %></td>
+                <td><%= challenge.pharmacy.city %></td>
+                <td><%= challenge.product %></td>
+                <% i = i + 1 %>
+              </tr>
+          <% end %>
+      <% end %>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  cip: 1
+  name: MyString
+  address: MyString
+  postal_code: 1
+  city: MyString
+  phone_number: 1
+
+two:
+  cip: 1
+  name: MyString
+  address: MyString
+  postal_code: 1
+  city: MyString
+  phone_number: 1

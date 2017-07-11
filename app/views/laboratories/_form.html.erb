@@ -1,0 +1,17 @@
+<div class="row">
+  <div class="col-md-4 col-md-offset-4 text-center">
+
+    <h2>Ajouter un nouveau laboratoire</h2>
+
+    <%= form_for @laboratory, html: {multipart: true} do |f| %>
+      <div class="form-group">
+        <%= f.text_field :name, autofocus: true, class: "form-control", placeholder: "Nom de l'entreprise" %>
+      </div>
+
+      <div class="actions">
+        <%= f.submit "Ajouter", class: "btn btn-primary" %>
+      </div>
+    <% end %>
+
+  </div>
+</div>

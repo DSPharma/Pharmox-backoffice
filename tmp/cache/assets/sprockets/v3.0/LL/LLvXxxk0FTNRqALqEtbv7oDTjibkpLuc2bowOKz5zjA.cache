@@ -1,0 +1,28 @@
+I"F(function() {
+  jQuery(function() {
+    return $('#campaigns').dataTable({
+      sPaginationType: "full_numbers",
+      bJQueryUI: true,
+      bProcessing: true,
+      bServerSide: true,
+      sAjaxSource: $('#campaigns').data('source'),
+      columns: [
+        {
+          'sortable': false,
+          'searchable': false
+        }, {
+          'sortable': true,
+          'searchable': true
+        }, {
+          'sortable': true,
+          'searchable': true
+        }, {
+          'sortable': true,
+          'searchable': true
+        }
+      ]
+    });
+  });
+
+}).call(this);
+:ET

@@ -1,0 +1,23 @@
+I"ï(function() {
+  jQuery(function() {
+    return $('#campaigns').dataTable({
+      sPaginationType: "bootstrap",
+      bProcessing: true,
+      oLanguage: {
+        sUrl: "//cdn.datatables.net/plug-ins/1.10.15/i18n/French.json"
+      }
+    });
+  });
+
+  jQuery(function() {
+    return $('#dash1').dataTable({
+      sPaginationType: "bootstrap",
+      bProcessing: true,
+      oLanguage: {
+        sUrl: "//cdn.datatables.net/plug-ins/1.10.15/i18n/French.json"
+      }
+    });
+  });
+
+}).call(this);
+:ET

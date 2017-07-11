@@ -1,0 +1,63 @@
+<script>
+  $(document).on("click", "#dash1 tr", function() {
+    var i = 0
+    var href = $(this).data("href");
+    $(this).find('td').each(function(){
+        i++;
+        if (i == 6) {
+          var product = $(this).text();
+          $.ajax({url: "/campaigns/product", type: "POST", data: {"data": product}, success: function(data) {
+            window.location = href;
+          }});
+        }
+    });
+  });
+</script>
+
+<Div class="container">
+  <%= link_to 'En cour', dashboards_campaigns_current_path, class: "btn btn-default" %>
+  <a class="btn btn-primary">À venir</a>
+  <%= link_to 'Passé', dashboards_campaigns_past_path, class: "btn btn-default" %>
+
+  <h1>Campagnes à venir</h1>
+
+  <table id="dash1" class="table table-condensed table-hover">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Produit</th>
+        <th>date de début - date de fin</th>
+        <th>ciblage</th>
+        <th>nombre de pharmacie</th>
+        <th>Numéro de campagne</th>
+      </tr>
+    </thead>
+      <% if current_user.try(:admin?) %>
+        <% @campaigns.each do |campaign| %>
+          <% if (!@product || (@product != campaign.campaign_number)) && campaign.start_at.to_date.future? %>
+              <tr data-href= "<%= campaigns_path %>">
+                <td><%= campaign.title %></td>
+                <td><%= campaign.product %></td>
+                <td><%= campaign.start_at.strftime("%d/%m/%Y") %> - <%= campaign.end_at.strftime("%d/%m/%Y") %></td>
+                <td><%= campaign.target %></td>
+                <td><%= Campaign.where(campaign_number: campaign.campaign_number).count %></td>
+                <td><%= campaign.campaign_number %><% @product = campaign.campaign_number %></td>
+              </tr>
+          <% end %>
+        <% end %>
+      <% else %>
+        <% @campaigns.each do |campaign| %>
+          <% if (current_user.laboratory_id == campaign.laboratory_id) && (!@product || (@product != campaign.campaign_number)) && campaign.start_at.to_date.future? %>
+              <tr data-href= "<%= campaigns_path %>">
+                <td><%= campaign.title %></td>
+                <td><%= campaign.product %></td>
+                <td><%= campaign.start_at.strftime("%d/%m/%Y") %> - <%= campaign.end_at.strftime("%d/%m/%Y") %></td>
+                <td><%= campaign.target %></td>
+                <td><%= Campaign.where(campaign_number: campaign.campaign_number).count %></td>
+                <td><%= campaign.campaign_number %><% @product = campaign.campaign_number %></td>
+              </tr>
+          <% end %>
+        <% end %>
+      <% end %>
+  </table>
+</Div>

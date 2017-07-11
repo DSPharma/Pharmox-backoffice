@@ -1,0 +1,7 @@
+I"`(function() {
+  $(function() {
+    return $('#campaigns').dataTable;
+  });
+
+}).call(this);
+:ET

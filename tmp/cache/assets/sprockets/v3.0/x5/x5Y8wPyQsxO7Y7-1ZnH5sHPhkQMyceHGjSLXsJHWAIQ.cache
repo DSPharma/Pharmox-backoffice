@@ -1,0 +1,10 @@
+I"¯(function() {
+  $(function() {
+    return $('#campaigns').dataTable({
+      bServerSide: true,
+      sAjaxSource: $('#campaigns').data('source')
+    });
+  });
+
+}).call(this);
+:ET

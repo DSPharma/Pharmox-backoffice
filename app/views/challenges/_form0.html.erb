@@ -1,0 +1,37 @@
+<div class="row">
+  <div class="col-md-4 col-md-offset-4 text-center">
+
+    <h2>Ajouter une campagne</h2>
+
+      <%= form_tag import_campaigns_path, multipart: true do %>
+
+      <div class="form-group">
+        <%= text_field :title, :title, {autofocus: true, class: "form-control", placeholder: "Titre de la campagne"} %>
+      </div>
+
+      <div class="form-group">
+        <%= text_field :product, :product, {autofocus: true, class: "form-control", placeholder: "Produit"} %>
+      </div>
+
+      <div class="form-group">
+        <%= collection_select :laboratory_id, :id, Laboratory.all, :id, :name, {}, class: "form-control"%>
+      </div>
+
+      <div class="form-group">
+        <%= date_field :start_at, :start_at, {autofocus: true, class: "form-control"} %>
+      </div>
+
+      <div class="form-group">
+        <%= date_field :end_at, :end_at, {autofocus: true, class: "form-control"} %>
+      </div>
+
+      <div class="form-group">
+        <%= text_field :target, :target, {autofocus: true, class: "form-control", placeholder: "Ciblage"} %>
+      </div>
+
+        <%= file_field_tag :file %>
+        <%= submit_tag "Importer" %>
+      <% end %>
+
+  </div>
+</div>

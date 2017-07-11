@@ -1,0 +1,13 @@
+I"ý(function() {
+  jQuery(function() {
+    return $('#campaigns').dataTable({
+      bJQueryUI: true,
+      bProcessing: true,
+      bServerSide: true,
+      sAjaxSource: $('#campaigns').data('source'),
+      sAjaxDataProp: ""
+    });
+  });
+
+}).call(this);
+:ET

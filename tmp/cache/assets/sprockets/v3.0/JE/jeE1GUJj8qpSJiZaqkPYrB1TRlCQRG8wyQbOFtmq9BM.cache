@@ -1,0 +1,10 @@
+I"¦(function() {
+  jQuery(function() {
+    return $('#saisies').dataTable({
+      sPaginationType: "full_numbers",
+      bProcessing: true
+    });
+  });
+
+}).call(this);
+:ET
