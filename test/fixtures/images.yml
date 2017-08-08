@@ -1,9 +1,9 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  data: MyString
-  campaign: one
+  name: MyString
+  description: MyString
 
 two:
-  data: MyString
-  campaign: two
+  name: MyString
+  description: MyString

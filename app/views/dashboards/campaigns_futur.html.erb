@@ -1,5 +1,5 @@
 <script>
-  $(document).on("click", "#dash1 tr", function() {
+  $(document).on("click", "#dash tr", function() {
     var i = 0
     var href = $(this).data("href");
     $(this).find('td').each(function(){
@@ -14,14 +14,16 @@
   });
 </script>
 
-<Div class="container">
+<Div class="container background-container">
+  <!-- <h1 class="text-center">Entreprise <%= current_user.laboratory.name %></h1>
+  <h1 class="text-center">LOGO</h1> -->
   <%= link_to 'En cour', dashboards_campaigns_current_path, class: "btn btn-default" %>
-  <a class="btn btn-primary">À venir</a>
+  <a class="btn btn-primary disabled">À venir</a>
   <%= link_to 'Passé', dashboards_campaigns_past_path, class: "btn btn-default" %>
 
   <h1>Campagnes à venir</h1>
 
-  <table id="dash1" class="table table-condensed table-hover">
+  <table id="dash" class="table-bordered display table-hover table-striped table">
     <thead>
       <tr>
         <th>Type</th>
@@ -32,30 +34,33 @@
         <th>Numéro de campagne</th>
       </tr>
     </thead>
+      <% arr = [] %>
       <% if current_user.try(:admin?) %>
         <% @campaigns.each do |campaign| %>
-          <% if (!@product || (@product != campaign.campaign_number)) && campaign.start_at.to_date.future? %>
+          <% if ((arr.include?(campaign.campaign_number) == false)) && campaign.start_at.to_date.future? %>
               <tr data-href= "<%= campaigns_path %>">
                 <td><%= campaign.title %></td>
                 <td><%= campaign.product %></td>
                 <td><%= campaign.start_at.strftime("%d/%m/%Y") %> - <%= campaign.end_at.strftime("%d/%m/%Y") %></td>
                 <td><%= campaign.target %></td>
                 <td><%= Campaign.where(campaign_number: campaign.campaign_number).count %></td>
-                <td><%= campaign.campaign_number %><% @product = campaign.campaign_number %></td>
+                <td><%= campaign.campaign_number %></td>
               </tr>
+              <% arr.push(campaign.campaign_number) %>
           <% end %>
         <% end %>
       <% else %>
         <% @campaigns.each do |campaign| %>
-          <% if (current_user.laboratory_id == campaign.laboratory_id) && (!@product || (@product != campaign.campaign_number)) && campaign.start_at.to_date.future? %>
+          <% if (current_user.laboratory_id == campaign.laboratory_id) && ((arr.include?(campaign.campaign_number) == false)) && campaign.start_at.to_date.future? %>
               <tr data-href= "<%= campaigns_path %>">
                 <td><%= campaign.title %></td>
                 <td><%= campaign.product %></td>
                 <td><%= campaign.start_at.strftime("%d/%m/%Y") %> - <%= campaign.end_at.strftime("%d/%m/%Y") %></td>
                 <td><%= campaign.target %></td>
                 <td><%= Campaign.where(campaign_number: campaign.campaign_number).count %></td>
-                <td><%= campaign.campaign_number %><% @product = campaign.campaign_number %></td>
+                <td><%= campaign.campaign_number %></td>
               </tr>
+              <% arr.push(campaign.campaign_number) %>
           <% end %>
         <% end %>
       <% end %>

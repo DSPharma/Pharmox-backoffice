@@ -5,6 +5,10 @@ class EntriesController < ApplicationController
 
     def new
       @campaigns = Campaign.all
+      @now = @campaigns.where("end_at >= ?", Time.zone.now.beginning_of_day)
+      if @now === []
+        redirect_to root_url, :flash => { :error => "Aucune campagne en cour ou à venir." }
+      end
       @entries = Entry.all
       @entry = Entry.new
     end
@@ -36,7 +40,7 @@ private
     end
 
     def entry_params
-      params.require(:entry).permit(:type, :title, :product_concerned)
+      params.require(:entry).permit(:kind, :title, :num_campaign)
     end
 
 end

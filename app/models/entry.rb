@@ -1,3 +1,4 @@
 class Entry < ApplicationRecord
-  self.inheritance_column = "inheritance_type"
+  has_many :image
+  has_many :input
 end

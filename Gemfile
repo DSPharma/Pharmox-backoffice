@@ -35,7 +35,7 @@ gem 'roo'
 gem 'activeadmin', github: 'activeadmin'
 
 #datatable
-gem 'jquery-datatables-rails', '~> 1.12.2'
+gem 'jquery-datatables-rails'
 gem 'ajax-datatables-rails'
 gem 'datatables-rails-bs3'
 
@@ -81,8 +81,20 @@ end
 
 gem 'simple_token_authentication', '~> 1.0'
 
+# Excel
+gem 'axlsx', git: 'https://github.com/randym/axlsx.git', ref: '776037c0fc799bb09da8c9ea47980bd3bf296874'
+gem 'axlsx_rails'
+gem 'rubyzip'
+gem 'zip-zip'
+
+gem 'rack-cors'
+
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'will_paginate'
 gem 'arel'
+
+# Uploader file
+gem 'carrierwave'
+gem 'paperclip'

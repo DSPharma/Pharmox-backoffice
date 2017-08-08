@@ -1,11 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  type: false
+  kind: MyString
   title: MyString
-  product_concerned: MyString
+  num_campaign: MyString
 
 two:
-  type: false
+  kind: MyString
   title: MyString
-  product_concerned: MyString
+  num_campaign: MyString

@@ -10,11 +10,19 @@ Rails.application.routes.draw do
   resources :laboratories
 
   post 'campaigns/product' => 'campaigns#product'
+  post 'pharmacies/all' => 'pharmacies#api'
   # post 'challenges/product' => 'challenges#product'
+
+  resources :images
+  resources :inputs
 
   namespace :api do
     namespace :v1 do
-      resources :pharmacies
+      # resources :pharmacies
+      post "/pharmacies", :to => 'pharmacies#index'
+      post "/campaigns", :to => 'campaigns#index'
+      get "/laboratories", :to => 'laboratories#index'
+      post "/images", :to => 'images#create'
       devise_scope :user do
         post "/sign_in", :to => 'sessions#create'
         post "/sign_up", :to => 'registrations#create'

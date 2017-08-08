@@ -2,7 +2,7 @@ class Pharmacy < ApplicationRecord
   has_many :campaigns
   has_many :challenges
   has_many :emails
-  has_many :pharmacist_users
+  has_many :users
 
   def self.import(file)
     spreadsheet = open_spreadsheet(file)

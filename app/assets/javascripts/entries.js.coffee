@@ -1,6 +1,6 @@
 jQuery ->
   $('#saisies').dataTable
-    sPaginationType: "bootstrap"
+    sPaginationType: "full_numbers"
     # bJQueryUI: true
     bProcessing: true
     oLanguage: {

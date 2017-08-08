@@ -22,6 +22,23 @@ class PharmaciesController < ApplicationController
       redirect_to root_url, notice: "Pharmacies importées."
     end
 
+    def api
+      pharmacies = Pharmacy.all
+      email = nil
+      pharmacies.each do |pharmacy|
+        if (params[:cip].to_i == pharmacy.cip)
+          id = pharmacy.id
+          email = Email.where(pharmacy_id: id)
+        end
+      end
+      p email[0].email
+      if email
+        render :json => email[0].email, :status => 200
+        return
+      end
+      render :status => 422
+    end
+
 private
 
     def set_pharmacy

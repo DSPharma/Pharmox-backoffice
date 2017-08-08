@@ -19,7 +19,6 @@
 //= require rails-ujs
 //= require_tree .
 //= require dataTables/jquery.dataTables
-//= require dataTables/jquery.dataTables.bootstrap3
 
 toastr.options = {
   "positionClass": "toast-bottom-right"

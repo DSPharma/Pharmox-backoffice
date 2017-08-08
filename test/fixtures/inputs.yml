@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  value: MyString
+  entry: one
+  campaign: one
+
+two:
+  value: MyString
+  entry: two
+  campaign: two

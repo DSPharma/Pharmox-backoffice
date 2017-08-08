@@ -5,24 +5,22 @@
 
     <%= form_for @entry, html: {multipart: true} do |f| %>
       <div class="form-group">
-          <% @campaigns.each do |campaign|%>
-            <% if campaign.end_at.to_date.today? || campaign.end_at.to_date.future? %>
-              <% if !@product %>
-                <% @input_campaign = campaign.campaign_number + ' ' + campaign.title + ' ' + campaign.product %>
-                <% @arr = [@input_campaign] %>
-              <% elsif campaign.campaign_number != @product %>
-                <% @input_campaign = campaign.campaign_number + ' ' + campaign.title + ' ' + campaign.product %>
-                <% @arr.push(@input_campaign) %>
-              <% end %>
-              <% @product = campaign.campaign_number %>
+          <% @now.each do |campaign|%>
+            <% if !@product %>
+              <% @input_campaign = campaign.campaign_number %>
+              <% @arr = [@input_campaign] %>
+            <% elsif campaign.campaign_number != @product %>
+              <% @input_campaign = campaign.campaign_number %>
+              <% @arr.push(@input_campaign) %>
             <% end %>
+            <% @product = campaign.campaign_number %>
           <% end %>
-        <%= f.select(:product_concerned, @arr, {}, { :class => 'form-control' }) %>
+        <%= f.select(:num_campaign, @arr, {}, { :class => 'form-control' }) %>
       </div>
 
       <div class="checkbox">
-        <%= f.radio_button :type, true %> Photo
-        <%= f.radio_button :type, false %> Texte
+        <%= f.radio_button :kind, 'photo' %> Photo
+        <%= f.radio_button :kind, 'text' %> Texte
       </div>
       <div class="form-group">
         <%= f.text_field :title, autofocus: true, class: "form-control", placeholder: "Texte de la saisie ou de la photo" %>
@@ -49,12 +47,8 @@
     <tbody>
         <% @entries.each do |entry| %>
           <tr>
-            <td><%= entry.product_concerned %></td>
-            <% if entry.type == true %>
-              <td>Photo</td>
-            <% else %>
-              <td>Texte</td>
-            <% end %>
+            <td><%= entry.num_campaign %></td>
+            <td><%= entry.kind %></td>
             <td><%= entry.title %></td>
             <td><%= link_to 'Supprimer', entry_path(id: entry.id), method: :delete  %></td>
           </tr>

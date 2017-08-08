@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170710095300) do
+ActiveRecord::Schema.define(version: 20170803152604) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -59,11 +59,33 @@ ActiveRecord::Schema.define(version: 20170710095300) do
   end
 
   create_table "entries", force: :cascade do |t|
-    t.boolean "type"
+    t.string "kind"
     t.string "title"
-    t.string "product_concerned"
+    t.string "num_campaign"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "images", force: :cascade do |t|
+    t.string "name"
+    t.string "description"
+    t.string "image_base"
+    t.bigint "campaign_id"
+    t.bigint "entry_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["campaign_id"], name: "index_images_on_campaign_id"
+    t.index ["entry_id"], name: "index_images_on_entry_id"
+  end
+
+  create_table "inputs", force: :cascade do |t|
+    t.string "value"
+    t.bigint "entry_id"
+    t.bigint "campaign_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["campaign_id"], name: "index_inputs_on_campaign_id"
+    t.index ["entry_id"], name: "index_inputs_on_entry_id"
   end
 
   create_table "laboratories", force: :cascade do |t|
@@ -81,14 +103,7 @@ ActiveRecord::Schema.define(version: 20170710095300) do
     t.string "phone_number"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "textentries", force: :cascade do |t|
-    t.string "data"
-    t.bigint "campaign_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["campaign_id"], name: "index_textentries_on_campaign_id"
+    t.string "enrollement_code"
   end
 
   create_table "users", force: :cascade do |t|
@@ -110,9 +125,11 @@ ActiveRecord::Schema.define(version: 20170710095300) do
     t.string "role"
     t.bigint "laboratory_id"
     t.string "authentication_token"
+    t.bigint "pharmacy_id"
     t.index ["authentication_token"], name: "index_users_on_authentication_token"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["laboratory_id"], name: "index_users_on_laboratory_id"
+    t.index ["pharmacy_id"], name: "index_users_on_pharmacy_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
@@ -123,6 +140,10 @@ ActiveRecord::Schema.define(version: 20170710095300) do
   add_foreign_key "challenges", "pharmacies"
   add_foreign_key "challenges", "users"
   add_foreign_key "emails", "pharmacies"
-  add_foreign_key "textentries", "campaigns"
+  add_foreign_key "images", "campaigns"
+  add_foreign_key "images", "entries"
+  add_foreign_key "inputs", "campaigns"
+  add_foreign_key "inputs", "entries"
   add_foreign_key "users", "laboratories"
+  add_foreign_key "users", "pharmacies"
 end

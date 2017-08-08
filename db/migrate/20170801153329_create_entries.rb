@@ -1,9 +1,9 @@
 class CreateEntries < ActiveRecord::Migration[5.1]
   def change
     create_table :entries do |t|
-      t.boolean :type
+      t.string :kind
       t.string :title
-      t.string :product_concerned
+      t.string :num_campaign
 
       t.timestamps
     end

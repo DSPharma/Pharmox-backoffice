@@ -1,70 +1,107 @@
-<div class="container">
+<div class="container background-container">
   <%= link_to(image_tag("Arrow\ left.svg", :class => "photo"), campaigns_path) %>
-  <%= link_to(image_tag("Home.svg", :class => "photo-home"), root_path) %>
-  <span>> <%= @campaign.title %> <%= @campaign.product %> <%= @campaign.start_at.strftime("%d/%m/%Y") %> - <%= @campaign.end_at.strftime("%d/%m/%Y") %> <%= @campaign.target %> > <%= @campaign.pharmacy.name %></span>
+  <span class="title"> <%= @campaign.title %> <%= @campaign.product %> <%= @campaign.start_at.strftime("%d/%m/%Y") %> - <%= @campaign.end_at.strftime("%d/%m/%Y") %> <%= @campaign.target %></span>
   <div class="row">
-    <div class="col-md-3">
+    <div class="col-md-4">
       <div class="statut">
         <% if @campaign.statut_type === 'no data' %>
-          <%= image_tag("No\ Data.svg", :class => "photo") %>
+          <%= image_tag("bNo\ Data.svg", :class => "photo") %>
         <% elsif @campaign.statut_type === 'validate' %>
-          <%= image_tag("Validate.svg", :class => "photo") %>
+          <%= image_tag("dValidate.svg", :class => "photo") %>
         <% elsif @campaign.statut_type === 'pending' %>
-          <%= image_tag("Pending.svg", :class => "photo") %>
+          <%= image_tag("aPending.svg", :class => "photo") %>
         <% elsif @campaign.statut_type === 'rejected' %>
-          <%= image_tag("Rejected.svg", :class => "photo") %>
+          <%= image_tag("cRejected.svg", :class => "photo") %>
         <% end %>
-        <div class="statut-type">
           <span>STATUT :</span>
-        </br>
-          <span><%= @campaign.statut_type %></span>
-        </div>
+          <% if @campaign.statut_type === 'no data' %>
+            <span>Aucune Donnée</span>
+          <% elsif @campaign.statut_type === 'validate' %>
+            <span>Validé par <%= @campaign.user.first_name %> <%= @campaign.user.last_name %></span>
+          <% elsif @campaign.statut_type === 'pending' %>
+            <span>En attente</span>
+          <% elsif @campaign.statut_type === 'rejected' %>
+            <span>Rejetée par <%= @campaign.user.first_name %> <%= @campaign.user.last_name %></span>
+          <% end %>
       </div>
-    <div class="row">
-    </br>
-      <span class="info-pharma">Information de la pharmacie</span>
-      <table class="table">
-        <tbody>
-            <tr>
-              <th>CIP</th>
-                <td><%= @campaign.pharmacy.cip %></td>
-            </tr>
-            <tr>
-              <th>Adresse</th>
-                <td><%= @campaign.pharmacy.address %></td>
-            </tr>
-            <tr>
-              <th>Code postal</th>
-                <td><%= @campaign.pharmacy.postal_code %></td>
-            </tr>
-            <tr>
-              <th>city</th>
-                <td><%= @campaign.pharmacy.city %></td>
-            </tr>
-            <tr>
-              <th>E-mail</th>
-                <td>example@example.com</td>
-            </tr>
-            <tr>
-              <th>Téléphone</th>
-                <td><%= @campaign.pharmacy.phone_number %></td>
-            </tr>
-        </tbody>
-      </table>
-    </div>
+      <div class="row">
+      </br>
+        <span class="info-pharma">Pharmacie <%= @campaign.pharmacy.name %></span>
+        <table class="table">
+          <tbody>
+              <tr>
+                <th>CIP</th>
+                  <td><%= @campaign.pharmacy.cip %></td>
+              </tr>
+              <tr>
+                <th>Adresse</th>
+                  <td><%= @campaign.pharmacy.address %></td>
+              </tr>
+              <tr>
+                <th>Code postal</th>
+                  <td><%= @campaign.pharmacy.postal_code %></td>
+              </tr>
+              <tr>
+                <th>city</th>
+                  <td><%= @campaign.pharmacy.city %></td>
+              </tr>
+              <tr>
+                <th>E-mail</th>
+                  <td>example@example.com</td>
+              </tr>
+              <tr>
+                <th>Téléphone</th>
+                  <td><%= @campaign.pharmacy.phone_number %></td>
+              </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
 
-    <div class="data-send col-md-offset-1 col-md-8">
-      <% if @campaign.statut_type == "no data" %>
-        <span>Photo(s) envoyée(s) : </span></br>
-          <span>Aucune photo envoyée<span></br>
-        <span>Donnée(s) saisie(s) : </span></br>
-          <span>Aucune saisie envoyée<span></br>
-        <%= link_to(image_tag("Arrow\ left.svg", :class => "photo-home"), "campaign_path(@campaign - 1)") %>
-        <button class="btn btn-success">Accepter</button>
-        <button class="btn btn-danger">Rejeter</button>
-        <%= link_to(image_tag("Arrow\ right.svg", :class => "photo-home"), "../") %>
-      <% end %>
-    </div>
+    <% if @campaign.statut_type == "no data" %>
+      <div class="data-send col-md-offset-1 col-md-7">
+          <strong>Photo(s) envoyée(s) : </strong></br>
+          <p class="text-center">Aucune photo envoyée</p></br>
+          <strong>Donnée(s) saisie(s) : </strong></br>
+          <p class="text-center">Aucune saisie envoyée</p></br>
+          <div class="col-md-offset-4 col-md-5" style="margin-bottom: 5px;">
+            <%= link_to(image_tag("Arrow\ left.svg", :class => "photo-home"), "campaign_path(@campaign - 1)") %>
+            <button class="btn btn-success disabled">Accepter</button>
+            <button class="btn btn-danger disabled">Rejeter</button>
+            <%= link_to(image_tag("Arrow\ right.svg", :class => "photo-home"), "../") %>
+          </div>
+      </div>
+    <% else %>
+      <div class="data-send col-md-offset-1 col-md-7">
+        <strong>Photo(s) envoyée(s) : </strong></br>
+          <% @entries.each do |entry| %>
+            <% if entry.kind === 'photo' %>
+              <span><%= entry.title %> :</span>
+              <% @images.each do |image| %>
+                <% if image.entry_id === entry.id %>
+                  <img class="photo-campaign" src='<%= image.image_base %>' /></br>
+                <% end %>
+              <% end %>
+            <% end %>
+          <% end %>
+        <strong>Donnée(s) saisie(s) : </strong></br>
+          <% @entries.each do |entry| %>
+            <% if entry.kind === 'text' %>
+              <span><%= entry.title %> :</span>
+              <% @inputs.each do |input| %>
+                <% if input.entry_id === entry.id %>
+                  <span> <%= input.value %></span></br>
+                <% end %>
+              <% end %>
+            <% end %>
+          <% end %>
+        <div class="col-md-offset-4 col-md-5" style="margin-bottom: 5px;">
+          <%= link_to(image_tag("Arrow\ left.svg", :class => "photo-home"), campaign_path(@campaign)) %>
+          <%= link_to 'Accepte', campaign_path(@campaign, statut: 'validate'), method: :put, class: "btn btn-success" %>
+          <%= link_to 'Rejeter', campaign_path(@campaign, statut: 'rejected'), method: :put, class: "btn btn-danger" %>
+          <%= link_to(image_tag("Arrow\ right.svg", :class => "photo-home"), "../") %>
+        </div>
+      </div>
+    <% end %>
   </div>
 </div>

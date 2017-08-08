@@ -4,6 +4,8 @@ class Campaign < ApplicationRecord
   belongs_to :user
   belongs_to :laboratory
   belongs_to :pharmacy
+  has_many :image
+  has_many :input
 
   def self.import(file, pharmacies, title, product, start_at, end_at, target, laboratory_id)
     spreadsheet = open_spreadsheet(file)

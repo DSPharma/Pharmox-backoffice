@@ -5,7 +5,8 @@ class Api::V1::SessionsController < Devise::SessionsController
   respond_to :json
 
   def create
-    user = User.find_by(:email => params[:user_login])
+    user = User.find_by(:email => params[:user_login].downcase)
+    # p params[:user_login].downcase
     unless user.nil?
     	if user.valid_password?params[:password]
         render :json => user, :status => 200
@@ -17,7 +18,6 @@ class Api::V1::SessionsController < Devise::SessionsController
 
   def destroy
     # sign_out(resource_name)
-    session.clear
     render :json => { :info => "Logged out" }, :status => 200
   end
 
