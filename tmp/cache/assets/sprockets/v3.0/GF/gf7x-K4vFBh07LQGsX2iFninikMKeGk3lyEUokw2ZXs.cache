@@ -1,9 +1,0 @@
-I"–(function() {
-  $(function() {
-    return $('#campaigns').dataTable({
-      sAjaxSource: $('#campaigns').data('source')
-    });
-  });
-
-}).call(this);
-:ET
